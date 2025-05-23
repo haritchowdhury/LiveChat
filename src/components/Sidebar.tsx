@@ -63,9 +63,10 @@ export const Sidebar: React.FC = () => {
   };
 
   const getLastMessagePreview = (conversation: Conversation): string => {
-    if (!conversation.last_message) return "";
+    if (!conversation.last_message || !conversation.last_message.text)
+      return "";
     return (
-      conversation.last_message.text ||
+      `${conversation.last_message?.text.slice(0, 25)}...` ||
       `[${conversation.last_message.type}]` ||
       ""
     );
@@ -243,11 +244,11 @@ export const Sidebar: React.FC = () => {
                     {getLastMessagePreview(conversation as any)}
                   </p>
                   {conversation.unread_count &&
-                    Number(conversation.unread_count) > 0 && (
-                      <span className="bg-[#00a884] text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                        {conversation.unread_count}
-                      </span>
-                    )}
+                  conversation.unread_count > 0 ? (
+                    <span className="bg-[#00a884] text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                      {conversation.unread_count}
+                    </span>
+                  ) : null}
                 </div>
               </div>
             </div>
