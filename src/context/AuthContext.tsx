@@ -104,7 +104,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         data: { name },
       },
     });
-    console.log(data, error);
     if (error) return { error };
 
     const newUserId = data.user?.id;

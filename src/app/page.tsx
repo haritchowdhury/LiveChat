@@ -48,7 +48,6 @@ export default function Home() {
 
   return (
     <div className="flex flex-col h-screen  bg-[#f0f2f5]">
-      {/* Topbar */}
       <div className="flex-shrink-0">
         <Topbar />
       </div>
