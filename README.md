@@ -1,8 +1,8 @@
 ## Periskope Takehome
 
-## RUn this locally
+## Run this locally
 
-1. Clone the repo
+1. Clone the repo, run `cd Periskope-assignment`
 
 2. Install the dependencies, by running `yarn`
 
