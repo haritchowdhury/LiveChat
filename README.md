@@ -2,7 +2,7 @@
 
 ## Run this locally
 
-1. Clone the repo, run `cd Periskope-assignment`
+1. Clone the repo `git clone git@github.com:iminparallel/Periskope-assignment.git`, run `cd Periskope-assignment`
 
 2. Install the dependencies, by running `yarn`
 
