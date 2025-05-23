@@ -243,11 +243,11 @@ export const Sidebar: React.FC = () => {
                     {getLastMessagePreview(conversation as any)}
                   </p>
                   {conversation.unread_count &&
-                  conversation.unread_count > 0 ? (
-                    <span className="bg-[#00a884] text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                      {conversation.unread_count}
-                    </span>
-                  ) : null}
+                    Number(conversation.unread_count) > 0 && (
+                      <span className="bg-[#00a884] text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                        {conversation.unread_count}
+                      </span>
+                    )}
                 </div>
               </div>
             </div>
