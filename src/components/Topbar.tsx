@@ -1,26 +1,17 @@
 "use client";
 
 import type React from "react";
-import {
-  MdMenu,
-  MdSearch,
-  MdNotifications,
-  MdSettings,
-  MdAccountCircle,
-  MdMoreVert,
-} from "react-icons/md";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { FiSearch, FiSettings, FiRefreshCw } from "react-icons/fi";
-import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
-import { IoIosHelpCircleOutline } from "react-icons/io";
-import { FaStar } from "react-icons/fa";
-import { IoMdCode } from "react-icons/io";
 import { MdOutlineResetTv } from "react-icons/md";
+import { FiRefreshCw } from "react-icons/fi";
+import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
+import { IoIosHelpCircleOutline, IoMdCode } from "react-icons/io";
+import { FaStar } from "react-icons/fa";
 import { RiNotificationOffFill } from "react-icons/ri";
 import { WiStars } from "react-icons/wi";
 import { LuLogs } from "react-icons/lu";
 import { useAuth } from "@/context/AuthContext";
 import Image from "next/image";
+
 export const Topbar: React.FC = () => {
   const { user, signOut } = useAuth();
 

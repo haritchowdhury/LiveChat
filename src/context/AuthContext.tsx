@@ -95,30 +95,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     }
     return { error };
   };
-  /*
-  const signUp = async (email: string, password: string, name: string) => {
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          name,
-        },
-      },
-    });
 
-    if (!error) {
-      // Create user profile in users table
-      await supabase.from("users").insert({
-        id: (await supabase.auth.getUser()).data.user?.id,
-        email,
-        name,
-      });
-      router.push("/");
-    }
-
-    return { error };
-  }; */
   const signUp = async (email: string, password: string, name: string) => {
     const { data, error } = await supabase.auth.signUp({
       email,
@@ -127,7 +104,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         data: { name },
       },
     });
-
+    console.log(data, error);
     if (error) return { error };
 
     const newUserId = data.user?.id;

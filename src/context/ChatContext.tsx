@@ -10,8 +10,6 @@ import { supabase } from "@/lib/supabaseClient";
 import {
   Conversation,
   Message,
-  User,
-  ParticipantWithConversation,
   ChatContextType,
   SharedConversation,
 } from "@/types";
@@ -44,42 +42,32 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({
   const [loadingConversations, setLoadingConversations] = useState(false);
   const { user } = useAuth();
 
-  // Store conversation IDs at component level to use across hooks
-  const [userConversationIds, setUserConversationIds] = useState<string[]>([]);
-  const [lastUpdatedMessageIds, setLastUpdatedMessageIds] = useState<string[]>(
-    []
-  );
-
-  // Add refs to track subscription channels
-  /*
-  const messagesChannelRef = useRef<any>(null);
-  const globalChannelRef = useRef<any>(null);
-  const conversationsChannelRef = useRef<any>(null);
-  const participantsChannelRef = useRef<any>(null);
-  */
   // Add ref for processed message IDs
   const processedMessageIdsRef = useRef<Set<string>>(new Set());
 
+  // UseEffect to get the Conversations
   useEffect(() => {
-    if (!user) {
-      console.log("No user found");
-      return;
-    }
+    if (!user) return;
 
-    const fetchConversationUpdates = async () => {
+    setLoadingConversations(true);
+
+    // Get all conversations for the current user
+    const fetchConversations = async () => {
       const { data: participations, error } = await supabase
         .from("participants")
         .select("conversation_id")
         .eq("user_id", user.id);
 
       if (error) {
-        console.error("Error fetching most recent conversation:", error);
+        console.error("Error fetching conversations:", error);
+        setLoadingConversations(false);
+        // return;
       }
 
       const conversationIds = (participations || [])?.map(
         (p) => p.conversation_id
       );
-      //setUserConversationIds(conversationIds); // Store the IDs for later use
+      // setUserConversationIds(conversationIds); // Store the IDs for later use
 
       // Get detailed conversation info
       const { data: conversationsData, error: conversationsError } =
@@ -99,201 +87,126 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({
           .in("id", conversationIds)
           .order("updated_at", { ascending: false });
 
+      let conversationsWithLastMessage: Conversation[] = [];
+
       if (conversationsError) {
         console.error(
           "Error fetching conversation details:",
           conversationsError
         );
-      }
-      const ConversationUpdates = (conversationsData || [])?.map(
-        (p) => p.last_message_id
-      );
-      setLastUpdatedMessageIds(ConversationUpdates);
-      return;
-    };
+        // setLoadingConversations(false);
+        // return;
+      } else {
+        // Set the current conversation if conversation data exists
 
-    const interval = setInterval(fetchConversationUpdates, 1000);
+        // Get last messages for each conversation
+        conversationsWithLastMessage = await Promise.all(
+          conversationsData.map(async (conversation) => {
+            if (conversation.last_message_id) {
+              const { data: lastMessage } = await supabase
+                .from("messages")
+                .select("*")
+                .eq("id", conversation.last_message_id)
+                .single();
 
-    return () => clearInterval(interval);
-  }, [user]);
+              // Calculate unread count
+              const currentUserParticipant = conversation.participants.find(
+                (p: any) => p.user_id === user.id
+              );
 
-  // UseEffect to get the Conversations
-  useEffect(
-    () => {
-      if (!user) return;
+              let unreadCount = 0;
+              if (
+                currentUserParticipant &&
+                currentUserParticipant.last_read_message_id
+              ) {
+                const { data: lastReadMessage, error: lastReadError } =
+                  await supabase
+                    .from("messages")
+                    .select("created_at")
+                    .eq("id", currentUserParticipant.last_read_message_id)
+                    .single();
 
-      setLoadingConversations(true);
-
-      // Get all conversations for the current user
-      const fetchConversations = async () => {
-        const { data: participations, error } = await supabase
-          .from("participants")
-          .select("conversation_id")
-          .eq("user_id", user.id);
-
-        if (error) {
-          console.error("Error fetching conversations:", error);
-          setLoadingConversations(false);
-          // return;
-        }
-
-        /* if (!participations || participations.length === 0) {
-        setConversations([]);
-        setUserConversationIds([]); // Update the state
-        setLoadingConversations(false);
-        return;
-      } */
-
-        const conversationIds = (participations || [])?.map(
-          (p) => p.conversation_id
-        );
-        setUserConversationIds(conversationIds); // Store the IDs for later use
-
-        // Get detailed conversation info
-        const { data: conversationsData, error: conversationsError } =
-          await supabase
-            .from("conversations")
-            .select(
-              `
-          *,
-          participants:participants(
-            id,
-            user_id,
-            last_read_message_id,
-            user:users(*)
-          )
-        `
-            )
-            .in("id", conversationIds)
-            .order("updated_at", { ascending: false });
-
-        let conversationsWithLastMessage: Conversation[] = [];
-
-        if (conversationsError) {
-          console.error(
-            "Error fetching conversation details:",
-            conversationsError
-          );
-          // setLoadingConversations(false);
-          // return;
-        } else {
-          // Set the current conversation if conversation data exists
-          setCurrentConversationId(conversationsData[0]?.id);
-
-          // Get last messages for each conversation
-          conversationsWithLastMessage = await Promise.all(
-            conversationsData.map(async (conversation) => {
-              if (conversation.last_message_id) {
-                const { data: lastMessage } = await supabase
-                  .from("messages")
-                  .select("*")
-                  .eq("id", conversation.last_message_id)
-                  .single();
-
-                // Calculate unread count
-                const currentUserParticipant = conversation.participants.find(
-                  (p: any) => p.user_id === user.id
-                );
-
-                let unreadCount = 0;
-                if (
-                  currentUserParticipant &&
-                  currentUserParticipant.last_read_message_id
-                ) {
+                if (!lastReadError && lastReadMessage?.created_at) {
+                  // Now use that timestamp to count newer messages
                   const { count, error } = await supabase
                     .from("messages")
                     .select("*", { count: "exact", head: true })
                     .eq("conversation_id", conversation.id)
-                    .gt(
-                      "created_at",
-                      supabase
-                        .from("messages")
-                        .select("created_at")
-                        .eq("id", currentUserParticipant.last_read_message_id)
-                        .single()
-                    );
+                    .gt("created_at", lastReadMessage.created_at);
 
                   if (!error && count !== null) {
                     unreadCount = count;
                   }
                 }
-
-                return {
-                  ...conversation,
-                  last_message: lastMessage || null,
-                  unread_count: unreadCount,
-                  isCreated: true,
-                };
               }
+
               return {
                 ...conversation,
-                last_message: null,
-                unread_count: 0,
+                last_message: lastMessage || null,
+                unread_count: unreadCount || 0,
                 isCreated: true,
               };
-            })
-          );
-        }
-
-        /**
-         * Started here
-         */
-        // Fetch all users who don't share a conversation with current user
-        const { data: allOtherUsers, error: usersError } = await supabase
-          .from("users")
-          .select("id, name")
-          .neq("id", user.id);
-
-        if (usersError) {
-          console.error("Error fetching users:", usersError);
-          setConversations(conversationsWithLastMessage);
-          setLoadingConversations(false);
-          return;
-        }
-
-        // Get user IDs that current user already shares a conversation with
-        const sharedUserIds = new Set<string>();
-        conversationsWithLastMessage.forEach((conversation) => {
-          conversation.participants?.forEach((p: any) => {
-            if (p.user_id !== user.id) {
-              sharedUserIds.add(p.user_id);
             }
-          });
-        });
+            return {
+              ...conversation,
+              last_message: null,
+              unread_count: 0,
+              isCreated: true,
+            };
+          })
+        );
+      }
 
-        // Prepare "pseudo-conversations"
-        const pseudoConversations = allOtherUsers
-          .filter((u) => !sharedUserIds.has(u.id))
-          .map((u) => ({
-            id: u.id, // <- user_id as id
-            name: u.name,
-            is_group: false,
-            created_at: "",
-            updated_at: "",
-            avatar_url: "",
-            last_message_id: undefined,
-            participants: undefined,
-            last_message: undefined,
-            unread_count: 0,
-            isCreated: false,
-          }));
+      // Fetch all users who don't share a conversation with current user
+      const { data: allOtherUsers, error: usersError } = await supabase
+        .from("users")
+        .select("id, name")
+        .neq("id", user.id);
 
-        /**
-         * Ended here
-         */
-
-        setConversations([
-          ...conversationsWithLastMessage,
-          ...pseudoConversations,
-        ]);
-
+      if (usersError) {
+        console.error("Error fetching users:", usersError);
+        setConversations(conversationsWithLastMessage);
         setLoadingConversations(false);
-      };
+        return;
+      }
 
-      fetchConversations();
-    },
-    [user] /*lastUpdatedMessageIds*/
-  );
+      // Get user IDs that current user already shares a conversation with
+      const sharedUserIds = new Set<string>();
+      conversationsWithLastMessage.forEach((conversation) => {
+        conversation.participants?.forEach((p: any) => {
+          if (p.user_id !== user.id) {
+            sharedUserIds.add(p.user_id);
+          }
+        });
+      });
+
+      // Prepare "pseudo-conversations"
+      const pseudoConversations = allOtherUsers
+        .filter((u) => !sharedUserIds.has(u.id))
+        .map((u) => ({
+          id: u.id, // <- user_id as id
+          name: u.name,
+          is_group: false,
+          created_at: "",
+          updated_at: "",
+          avatar_url: "",
+          last_message_id: undefined,
+          participants: undefined,
+          last_message: undefined,
+          unread_count: 0,
+          isCreated: false,
+        }));
+
+      setConversations([
+        ...conversationsWithLastMessage,
+        ...pseudoConversations,
+      ]);
+
+      setLoadingConversations(false);
+    };
+
+    fetchConversations();
+  }, [user]);
 
   // UseEffect to get the current conversation messages
   useEffect(() => {
