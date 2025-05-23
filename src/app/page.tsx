@@ -47,16 +47,20 @@ export default function Home() {
   }
 
   return (
-    <div className="flex flex-col h-screen  bg-[#f0f2f5]">
+    <div className="flex flex-col h-screen bg-[#f0f2f5]">
+      {/* Topbar */}
       <div className="flex-shrink-0">
         <Topbar />
       </div>
 
       {/* Main content area */}
       <div className="flex flex-1 overflow-hidden">
-        <div className="w-80 min-w-80 max-w-80 h-full border-r border-[#d1d7db] flex-shrink-0">
+        {/* Sidebar - using absolute positioning with full height */}
+        <div className="w-80 h-[calc(100vh-2rem)] overflow-hidden">
           <Sidebar />
         </div>
+
+        {/* Chat window */}
         <div className="flex-1 h-full min-w-0">
           <ChatWindow />
         </div>

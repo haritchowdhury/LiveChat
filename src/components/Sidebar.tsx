@@ -92,53 +92,54 @@ export const Sidebar: React.FC = () => {
   };
 
   return (
-    <div className="flex">
+    <div className="flex h-full">
       {/* Left Navigation Sidebar */}
-      <div className="w-8 bg-[#f0f2f5] flex flex-col justify-between ">
+      <div className="w-8 bg-[#f0f2f5] flex flex-col  justify-between py-4">
         {/* Top 6 buttons */}
         <div className="flex flex-col space-y-3">
-          <button className="p-2 rounded-lg hover:bg-[#3c4249] text-[#54656f] hover:text-white transition-colors">
-            <IoMdHome size={20} />
+          <button className="p-1 rounded-lg hover:bg-[#3c4249] text-[#54656f] hover:text-white transition-colors">
+            <IoMdHome size={16} />
           </button>
-          <button className="p-2 rounded-lg hover:bg-[#3c4249] text-[#00a884] hover:text-white transition-colors">
-            <IoChatbubbleEllipsesSharp size={20} />
+          <button className="p-1 rounded-lg hover:bg-[#3c4249] text-[#00a884] hover:text-white transition-colors">
+            <IoChatbubbleEllipsesSharp size={16} />
           </button>
-          <button className="p-2 rounded-lg hover:bg-[#3c4249] text-[#54656f] hover:text-white transition-colors">
-            <IoTicket size={20} />
+          <button className="p-1 rounded-lg hover:bg-[#3c4249] text-[#54656f] hover:text-white transition-colors">
+            <IoTicket size={16} />
           </button>
-          <button className="p-2 rounded-lg hover:bg-[#3c4249] text-[#54656f] hover:text-white transition-colors">
-            <BsGraphUpArrow size={20} />
+          <button className="p-1 rounded-lg hover:bg-[#3c4249] text-[#54656f] hover:text-white transition-colors">
+            <BsGraphUpArrow size={16} />
           </button>
-          <button className="p-2 rounded-lg hover:bg-[#3c4249] text-[#54656f] hover:text-white transition-colors">
-            <MdFormatListBulleted size={20} />
+          <button className="p-1 rounded-lg hover:bg-[#3c4249] text-[#54656f] hover:text-white transition-colors">
+            <MdFormatListBulleted size={16} />
           </button>
-          <button className="p-2 rounded-lg hover:bg-[#3c4249] text-[#54656f] hover:text-white transition-colors">
-            <PiGitForkFill size={20} />
+          <button className="p-1 rounded-lg hover:bg-[#3c4249] text-[#54656f] hover:text-white transition-colors">
+            <PiGitForkFill size={16} />
           </button>
-          <button className="p-2 rounded-lg hover:bg-[#3c4249] text-[#54656f] hover:text-white transition-colors">
-            <RiContactsBookFill size={20} />
+          <button className="p-1 rounded-lg hover:bg-[#3c4249] text-[#54656f] hover:text-white transition-colors">
+            <RiContactsBookFill size={16} />
           </button>
-          <button className="p-2 rounded-lg hover:bg-[#3c4249] text-[#54656f] hover:text-white transition-colors">
-            <MdHelp size={20} />
+          <button className="p-1 rounded-lg hover:bg-[#3c4249] text-[#54656f] hover:text-white transition-colors">
+            <MdHelp size={16} />
           </button>
-          <button className="p-2 rounded-lg hover:bg-[#3c4249] text-[#54656f] hover:text-white transition-colors">
-            <PiFolderFill size={20} style={{ transform: "scaleX(-1)" }} />
+          <button className="p-1 rounded-lg hover:bg-[#3c4249] text-[#54656f] hover:text-white transition-colors">
+            <PiFolderFill size={16} style={{ transform: "scaleX(-1)" }} />
           </button>
-          <button className="p-2 rounded-lg hover:bg-[#3c4249] text-[#54656f]hover:text-white transition-colors">
-            <MdOutlineChecklist size={20} style={{ transform: "scaleX(-1)" }} />
+          <button className="p-1 rounded-lg hover:bg-[#3c4249] text-[#54656f]hover:text-white transition-colors">
+            <MdOutlineChecklist size={16} style={{ transform: "scaleX(-1)" }} />
           </button>
-          <button className="p-2 rounded-lg hover:bg-[#3c4249] text-[#54656f] hover:text-white transition-colors">
-            <MdSettings size={20} />
+
+          <button className="p-1 rounded-lg hover:bg-[#3c4249] text-[#54656f] hover:text-white transition-colors">
+            <MdSettings size={16} />
           </button>
         </div>
 
         {/* Bottom 2 buttons */}
         <div className="flex flex-col space-y-3">
-          <button className="p-2 rounded-lg hover:bg-[#3c4249] text-[#54656f] hover:text-white transition-colors">
-            <TbStarsFilled size={20} />
+          <button className="p-1 rounded-lg hover:bg-[#3c4249] text-[#54656f] hover:text-white transition-colors">
+            <TbStarsFilled size={16} />
           </button>
-          <button className="p-2 rounded-lg hover:bg-[#3c4249] text-[#54656f] hover:text-white transition-colors">
-            <LuBookDown size={20} />
+          <button className="p-1 rounded-lg hover:bg-[#3c4249] text-[#54656f] hover:text-white transition-colors">
+            <LuBookDown size={16} />
           </button>
         </div>
       </div>
