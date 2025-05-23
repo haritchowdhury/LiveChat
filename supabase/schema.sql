@@ -5,7 +5,7 @@ CREATE TABLE users (
   avatar_url TEXT,
   name TEXT NOT NULL,
   phone TEXT,
-  status TEXT DEFAULT 'Hey there! I am using WhatsApp.',
+  status TEXT DEFAULT 'Hey there! I am using Periskope.',
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   last_seen TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );

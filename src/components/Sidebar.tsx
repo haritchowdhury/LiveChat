@@ -113,10 +113,10 @@ export const Sidebar: React.FC = () => {
             <MdFormatListBulleted size={20} />
           </button>
           <button className="p-2 rounded-lg hover:bg-[#3c4249] text-[#54656f] hover:text-white transition-colors">
-            <PiGitForkFill size={20} style={{ transform: "scaleX(-1)" }} />
+            <PiGitForkFill size={20} />
           </button>
           <button className="p-2 rounded-lg hover:bg-[#3c4249] text-[#54656f] hover:text-white transition-colors">
-            <RiContactsBookFill size={20} style={{ transform: "scaleX(-1)" }} />
+            <RiContactsBookFill size={20} />
           </button>
           <button className="p-2 rounded-lg hover:bg-[#3c4249] text-[#54656f] hover:text-white transition-colors">
             <MdHelp size={20} />

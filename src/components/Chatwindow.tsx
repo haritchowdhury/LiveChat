@@ -107,31 +107,31 @@ export const ChatWindow: React.FC = () => {
           {/* Top 6 buttons */}
           <div className="flex flex-col space-y-3">
             <button className="p-2 rounded-lg hover:bg-[#3c4249] text-[#aebac1] hover:text-white transition-colors">
-              <LuBookUp2 size={20} />
+              <LuBookUp2 size={16} />
             </button>
             <button className="p-2 rounded-lg hover:bg-[#3c4249] text-[#aebac1] hover:text-white transition-colors">
-              <GrCycle size={20} />
+              <GrCycle size={16} />
             </button>
             <button className="p-2 rounded-lg hover:bg-[#3c4249] text-[#aebac1] hover:text-white transition-colors">
-              <LuPenLine size={20} />
+              <LuPenLine size={16} />
             </button>
             <button className="p-2 rounded-lg hover:bg-[#3c4249] text-[#aebac1] hover:text-white transition-colors">
-              <IoReorderThreeOutline size={20} />
+              <IoReorderThreeOutline size={16} />
             </button>
             <button className="p-2 rounded-lg hover:bg-[#3c4249] text-[#aebac1] hover:text-white transition-colors">
-              <MdHelp size={20} />
+              <MdHelp size={16} />
             </button>
             <button className="p-2 rounded-lg hover:bg-[#3c4249] text-[#aebac1] hover:text-white transition-colors">
-              <FaHubspot size={20} />
+              <FaHubspot size={16} />
             </button>
             <button className="p-2 rounded-lg hover:bg-[#3c4249] text-[#aebac1] hover:text-white transition-colors">
-              <MdHelp size={20} />
+              <MdHelp size={16} />
             </button>
             <button className="p-2 rounded-lg hover:bg-[#3c4249] text-[#aebac1] hover:text-white transition-colors">
-              <MdSnippetFolder size={20} />
+              <MdSnippetFolder size={16} />
             </button>
             <button className="p-2 rounded-lg hover:bg-[#3c4249] text-[#aebac1] hover:text-white transition-colors">
-              <MdOutlineSegment size={20} />
+              <MdOutlineSegment size={16} />
             </button>
           </div>
         </div>
@@ -287,31 +287,31 @@ export const ChatWindow: React.FC = () => {
         {/* Top 6 buttons */}
         <div className="flex flex-col space-y-3">
           <button className="p-2 rounded-lg hover:bg-[#3c4249] text-[#aebac1] hover:text-white transition-colors">
-            <LuBookUp2 size={20} />
+            <LuBookUp2 size={16} />
           </button>
           <button className="p-2 rounded-lg hover:bg-[#3c4249] text-[#aebac1] hover:text-white transition-colors">
-            <GrCycle size={20} />
+            <GrCycle size={16} />
           </button>
           <button className="p-2 rounded-lg hover:bg-[#3c4249] text-[#aebac1] hover:text-white transition-colors">
-            <LuPenLine size={20} />
+            <LuPenLine size={16} />
           </button>
           <button className="p-2 rounded-lg hover:bg-[#3c4249] text-[#aebac1] hover:text-white transition-colors">
-            <IoReorderThreeOutline size={20} />
+            <IoReorderThreeOutline size={16} />
           </button>
           <button className="p-2 rounded-lg hover:bg-[#3c4249] text-[#aebac1] hover:text-white transition-colors">
-            <MdHelp size={20} />
+            <MdHelp size={16} />
           </button>
           <button className="p-2 rounded-lg hover:bg-[#3c4249] text-[#aebac1] hover:text-white transition-colors">
-            <FaHubspot size={20} />
+            <FaHubspot size={16} />
           </button>
           <button className="p-2 rounded-lg hover:bg-[#3c4249] text-[#aebac1] hover:text-white transition-colors">
-            <MdHelp size={20} />
+            <MdHelp size={16} />
           </button>
           <button className="p-2 rounded-lg hover:bg-[#3c4249] text-[#aebac1] hover:text-white transition-colors">
-            <MdSnippetFolder size={20} />
+            <MdSnippetFolder size={16} />
           </button>
           <button className="p-2 rounded-lg hover:bg-[#3c4249] text-[#aebac1] hover:text-white transition-colors">
-            <MdOutlineSegment size={20} />
+            <MdOutlineSegment size={16} />
           </button>
         </div>
       </div>
