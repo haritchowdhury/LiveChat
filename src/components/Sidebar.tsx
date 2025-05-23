@@ -65,7 +65,7 @@ export const Sidebar: React.FC = () => {
   const getLastMessagePreview = (conversation: Conversation): string => {
     if (!conversation.last_message || !conversation.last_message.text)
       return "";
-    if (conversation.last_message.text.length > 25) {
+    if (conversation.last_message.text.length > 24) {
       return (
         `${conversation.last_message?.text.slice(0, 25)}...` ||
         `[${conversation.last_message.type}]` ||
