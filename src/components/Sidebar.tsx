@@ -34,6 +34,8 @@ export const Sidebar: React.FC = () => {
   } = useChat();
   const [searchTerm, setSearchTerm] = useState("");
 
+  console.log("conversations", conversations);
+
   const filteredConversations = searchTerm
     ? conversations.filter(
         (convo) =>
