@@ -65,11 +65,19 @@ export const Sidebar: React.FC = () => {
   const getLastMessagePreview = (conversation: Conversation): string => {
     if (!conversation.last_message || !conversation.last_message.text)
       return "";
-    return (
-      `${conversation.last_message?.text.slice(0, 25)}...` ||
-      `[${conversation.last_message.type}]` ||
-      ""
-    );
+    if (conversation.last_message.text.length > 28) {
+      return (
+        `${conversation.last_message?.text.slice(0, 25)}...` ||
+        `[${conversation.last_message.type}]` ||
+        ""
+      );
+    } else {
+      return (
+        `${conversation.last_message?.text}` ||
+        `[${conversation.last_message.type}]` ||
+        ""
+      );
+    }
   };
 
   const getLastMessageTime = (conversation: Conversation): string => {
