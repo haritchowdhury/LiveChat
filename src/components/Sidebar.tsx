@@ -54,18 +54,18 @@ export const Sidebar: React.FC = () => {
 
   const getConversationName = (conversation: Conversation): string => {
     if (conversation.name) {
-      return conversation.name.length < 10
+      return conversation.name.length < 16
         ? conversation.name
-        : `${conversation.name.slice(0, 10)}...`;
+        : `${conversation.name.slice(0, 16)}...`;
     }
     // For one-on-one conversations, use the other person's name
     const otherParticipant = conversation.participants?.find(
       (p) => p.user_id !== user?.id
     );
     if (otherParticipant?.user?.name) {
-      return otherParticipant?.user?.name.length < 10
+      return otherParticipant?.user?.name.length < 16
         ? otherParticipant?.user?.name
-        : `${otherParticipant?.user?.name.slice(0, 10)}...`;
+        : `${otherParticipant?.user?.name.slice(0, 16)}...`;
     } else {
       return otherParticipant?.user?.name || "Unknown User";
     }
