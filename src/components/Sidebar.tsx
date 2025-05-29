@@ -53,13 +53,22 @@ export const Sidebar: React.FC = () => {
   };
 
   const getConversationName = (conversation: Conversation): string => {
-    if (conversation.name) return conversation.name;
-
+    if (conversation.name) {
+      return conversation.name.length < 10
+        ? conversation.name
+        : `${conversation.name.slice(0, 10)}...`;
+    }
     // For one-on-one conversations, use the other person's name
     const otherParticipant = conversation.participants?.find(
       (p) => p.user_id !== user?.id
     );
-    return otherParticipant?.user?.name || "Unknown User";
+    if (otherParticipant?.user?.name) {
+      return otherParticipant?.user?.name.length < 10
+        ? otherParticipant?.user?.name
+        : `${otherParticipant?.user?.name.slice(0, 10)}...`;
+    } else {
+      return otherParticipant?.user?.name || "Unknown User";
+    }
   };
 
   const getLastMessagePreview = (conversation: Conversation): string => {
